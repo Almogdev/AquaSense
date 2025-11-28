@@ -7,3 +7,5 @@ const pool = mysql2.createPool({
     password: process.env.PASSWORD_DB,
     database: process.env.DATABASE
 });
+
+module.exports = pool.promise();
