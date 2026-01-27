@@ -18,4 +18,32 @@ const createAvgSensorData = async (req,res) => {
     }
 }
 
+const readAVGSensor = async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({ message: "name is required" });
+    }
+    const [rows] = await esp.readAvgSensor(name);
+    return res.status(200).json(rows);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+let x = 03;
+
+const deleteAvgSensor = async (req,res) => {
+    try {
+        const {id} = req.body;
+        if (id<0){
+        return res.status(400).json({ message: "ID is invalid" });
+        }
+        const deletedData = esp.deleteAvgSensor(id);
+        console.log(`Deleted avg of pot ${id}`);
+    } catch (error) {
+        console.log("Failed");
+    }
+}
+
 module.exports = {createAvgSensorData};

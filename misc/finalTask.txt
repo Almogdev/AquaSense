@@ -1,0 +1,23 @@
+The irrigation time must be recorded for every pump operation.
+
+Real-time transitions between the different states via the MQTT protocol.
+
+Build a complete server-side solution with a REST API based on the existing database.
+
+Separate routes for ESP and WEB.
+
+Bonus: 10 points for implementing a client-side application.
+
+- States -
+
+Temperature Mode:
+When the temperature is high, the pump operates more frequently.
+
+Soil Moisture Mode:
+The pump maintains a specific soil moisture level.
+
+Manual Mode:
+Turning the pump on and off through a user interface.
+
+Sabbath Mode:
+The pump operates independently of sensors and runs according to scheduled irrigation times.

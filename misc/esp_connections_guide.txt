@@ -1,0 +1,4 @@
+temperature: v => 3.3v | g => gnd | d - g16            {DHC-11}
+light: g => gnd | v => 3.3v | d => g36                 {ADC1}
+pump: vcc => 5v | gnd => gnd | b1a => g23 | b1b => g22 {buttons}
+Humidity: + => 3.3v | - => gnd | s => g39              {ADC1}            
