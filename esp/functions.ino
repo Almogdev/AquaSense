@@ -32,3 +32,13 @@ String buildJson(String sensor, float val) {
   serializeJson(doc,json);
   return json;
 }
+
+void waitForSerialInput() {
+  Serial.println("Waiting for input...");
+  while (Serial.available() == 0) {
+    // wait
+  }
+  String input = Serial.readStringUntil('\n');
+  Serial.print("Received: ");
+  Serial.println(input);
+}

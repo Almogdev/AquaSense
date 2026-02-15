@@ -26,6 +26,7 @@ void setup() {
 }
 
 void loop() {
+  waitForSerialInput();
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
   float moist = analogRead(MOIST_SENSOR);
