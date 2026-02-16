@@ -1,31 +1,66 @@
-void weatherMode(float temp) {
-  /*
-  The irrigation system operates based on weather conditions.
-  On hot days, the pump runs more frequently and for longer durations.
-  On cold days, the pump runs fewer times and for shorter durations.
-  */
+void weatherMode(float temp)
+{
+  static unsigned long lastRun = 0;
+
+  if (temp >= 30.0)
+  {
+    if (millis() - lastRun > 60000UL)
+    {
+      lastRun = millis();
+      pumpForMs(3000);
+    }
+  }
+  else if (temp <= 18.0)
+  {
+    if (millis() - lastRun > 180000UL)
+    {
+      lastRun = millis();
+      pumpForMs(1000);
+    }
+  }
+  else
+  {
+    if (millis() - lastRun > 120000UL)
+    {
+      lastRun = millis();
+      pumpForMs(2000);
+    }
+  }
 }
 
-void soilMoistureMode(float humidity) {
-  /*
-  The irrigation system monitors soil moisture levels.
-  The pump is activated when the soil becomes dry and stops
-  once the desired moisture level is reached.
-  */ 
+void soilMoistureMode(float humidity)
+{
+  const float START_THRESHOLD = 35.0;
+  const float STOP_THRESHOLD = 45.0;
+
+  static bool pumping = false;
+
+  if (!pumping && humidity < START_THRESHOLD)
+  {
+    pumping = true;
+    pumpOn();
+  }
+
+  if (pumping && humidity >= STOP_THRESHOLD)
+  {
+    pumping = false;
+    pumpOff();
+  }
 }
 
-void manualMode() {
-  /*
-  The user directly controls the irrigation pump through the user interface.
-  Pump activation is not dependent on sensor data,
-  except for safety and water-saving protection mechanisms.
-  */
+void manualMode()
+{
+  pumpOff();
 }
 
-void ScheduledMode () {
-/*
-  The irrigation pump operates according to predefined schedules.
-  Pump activity is not affected by sensor readings.
-  The system follows a fixed irrigation timetable.
-*/
+void ScheduledMode()
+{
+  static unsigned long lastRun = 0;
+  const unsigned long interval = 6UL * 60UL * 60UL * 1000UL;
+
+  if (millis() - lastRun > interval)
+  {
+    lastRun = millis();
+    pumpForMs(5000);
+  }
 }
